@@ -15,6 +15,10 @@ return {
         local cmp_action = lsp.cmp_action()
 
         cmp.setup({
+            window = {
+                completion = cmp.config.window.bordered(),
+                documentation = cmp.config.window.bordered(),
+            },
             sources = {
                 { name = 'path' },
                 { name = 'nvim_lsp' },

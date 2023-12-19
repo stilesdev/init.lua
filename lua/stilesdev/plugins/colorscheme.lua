@@ -7,5 +7,9 @@ return {
         -- re-enable transparency
         vim.api.nvim_set_hl(0, 'Normal', { bg = 'none' })
         vim.api.nvim_set_hl(0, 'NormalFloat', { bg = 'none' })
+
+        -- tweak border color for floating windows
+        local palette = require('catppuccin.palettes').get_palette('mocha')
+        vim.api.nvim_set_hl(0, 'FloatBorder', { fg = palette.lavender })
     end,
 }
