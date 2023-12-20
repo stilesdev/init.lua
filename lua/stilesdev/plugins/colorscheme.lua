@@ -2,6 +2,9 @@ return {
     'catppuccin/nvim',
     priority = 1000,
     config = function()
+        -- termguicolors required for this color scheme
+        vim.opt.termguicolors = true
+
         vim.cmd.colorscheme 'catppuccin-mocha'
 
         -- re-enable transparency
