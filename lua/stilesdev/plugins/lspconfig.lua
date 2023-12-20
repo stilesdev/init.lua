@@ -16,6 +16,13 @@ return {
             lsp.default_keymaps({buffer = bufnr})
         end)
 
+        lsp.set_sign_icons({
+            error = '󱎘', --   󱎘 󰚌 󰐼
+            warn = '',  --    
+            hint = '',  --    󱕅
+            info = '󰙎',  --   󰙎 󰑊
+        })
+
         require('mason-lspconfig').setup({
             ensure_installed = {
                 'jsonls',	-- JSON
