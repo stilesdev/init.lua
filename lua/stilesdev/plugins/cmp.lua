@@ -29,6 +29,10 @@ return {
                 { name = 'nvim_lua' },
                 { name = 'buffer' },
             },
+            completion = {
+                completeopt = 'menu,menuone,noinsert',
+            },
+            preselect = cmp.PreselectMode.None,
             formatting = lsp.cmp_format(),
             mapping = cmp.mapping.preset.insert({
                 ['<CR>'] = cmp.mapping.confirm({ select = true }),
