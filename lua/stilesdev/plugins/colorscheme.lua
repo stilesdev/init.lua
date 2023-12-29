@@ -1,5 +1,6 @@
 return {
     'catppuccin/nvim',
+    name = 'catppuccin',
     priority = 1000,
     config = function()
         -- termguicolors required for this color scheme
