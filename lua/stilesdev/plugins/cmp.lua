@@ -6,7 +6,6 @@ return {
         {'hrsh7th/cmp-path'},
         {'hrsh7th/cmp-nvim-lsp'},
         {'hrsh7th/cmp-nvim-lua'},
-        {'hrsh7th/cmp-buffer'},
     },
     config = function()
         -- Configure autocompletion settings
@@ -27,7 +26,6 @@ return {
                 { name = 'path' },
                 { name = 'nvim_lsp' },
                 { name = 'nvim_lua' },
-                { name = 'buffer' },
             },
             completion = {
                 completeopt = 'menu,menuone,noinsert',
