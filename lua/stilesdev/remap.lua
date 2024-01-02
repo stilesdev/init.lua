@@ -31,3 +31,5 @@ vim.keymap.set('n', '<leader>p', '"+p')
 vim.keymap.set('v', '<leader>p', '"+p')
 vim.keymap.set('n', '<leader>P', '"+P')
 
+-- make current file executable
+vim.keymap.set('n', '<leader>x', '<cmd>!chmod u+x %<CR>')
