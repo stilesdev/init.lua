@@ -15,11 +15,17 @@ return {
             lsp.default_keymaps({buffer = bufnr})
         end)
 
-        lsp.set_sign_icons({
-            error = '󱎘', --   󱎘 󰚌 󰐼
-            warn = '',  --    
-            hint = '',  --    󱕅
-            info = '󰙎',  --   󰙎 󰑊
+        --lsp.set_sign_icons({
+        --    error = '󱎘', --   󱎘 󰚌 󰐼
+        --    warn = '',  --    
+        --    hint = '',  --    󱕅
+        --    info = '󰙎',  --   󰙎 󰑊
+        --})
+
+        vim.diagnostic.config({
+            underline = true,
+            virtual_text = true,
+            signs = false,
         })
 
         require('mason-lspconfig').setup({
