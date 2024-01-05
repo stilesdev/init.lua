@@ -7,4 +7,17 @@ return {
         {'<leader>gf', "<cmd>lua require('telescope.builtin').git_files()<cr>", desc = 'Git Files'},
         {'<leader>fs', "<cmd>lua require('telescope.builtin').grep_string({ search = vim.fn.input('Grep > ') })<cr>", desc = 'File Search'},
     },
+    opts = function()
+        local actions = require('telescope.actions')
+
+        return {
+            defaults = {
+                mappings = {
+                    i = {
+                        ['<esc>'] = actions.close
+                    },
+                },
+            },
+        }
+    end
 }
