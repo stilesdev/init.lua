@@ -30,11 +30,14 @@ return {
 
         require('mason-lspconfig').setup({
             ensure_installed = {
-                'jsonls',	-- JSON
-                'lua_ls', 	-- LUA
-                'taplo', 	-- TOML
-                'tsserver', -- JS/TS
-                'volar', 	-- Vue
+                'eslint',        -- JS/TS Linting
+                'jsonls',        -- JSON
+                'lua_ls',        -- LUA
+                'stylelint_lsp', -- CSS Linting
+                'tailwindcss',   -- Tailwind CSS
+                'taplo',         -- TOML
+                'tsserver',      -- JS/TS
+                'volar',         -- Vue
             },
             handlers = {
                 lsp.default_setup,
