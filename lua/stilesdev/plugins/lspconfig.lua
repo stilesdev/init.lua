@@ -46,6 +46,17 @@ return {
                     local lua_opts = lsp.nvim_lua_ls()
                     require('lspconfig').lua_ls.setup(lua_opts)
                 end,
+                eslint = function()
+                    -- configure eslint to format on save
+                    require('lspconfig').eslint.setup({
+                        on_attach = function(client, bufnr)
+                            vim.api.nvim_create_autocmd("BufWritePre", {
+                                buffer = bufnr,
+                                command = 'EslintFixAll',
+                            })
+                        end,
+                    })
+                end,
             },
         })
     end,
