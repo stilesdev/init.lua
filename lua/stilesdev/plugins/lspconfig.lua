@@ -47,20 +47,48 @@ return {
                     require('lspconfig').lua_ls.setup(lua_opts)
                 end,
                 eslint = function()
-                    -- configure eslint to format on save
                     require('lspconfig').eslint.setup({
                         on_attach = function(client, bufnr)
+                            -- configure eslint to format on save
                             vim.api.nvim_create_autocmd("BufWritePre", {
                                 buffer = bufnr,
                                 command = 'EslintFixAll',
                             })
+
+                            -- allow eslint to respond to lsp formatting requests
+                            client.server_capabilities.documentFormattingProvider = true
                         end,
                     })
                 end,
+                stylelint_lsp = function ()
+                    require('lspconfig').stylelint_lsp.setup({
+                        -- only lint appropriate files
+                        filetypes = {
+                            'css',
+                            'less',
+                            'scss',
+                            'vue',
+                        },
+                        settings = {
+                            stylelintplus = {
+                                -- format on save
+                                autoFixOnSave = true,
+                                -- respond to lsp formatting requests
+                                autoFixOnFormat = true,
+                            }
+                        }
+                    })
+                end,
                 volar = function()
-                    -- enable takeover mode
                     require('lspconfig').volar.setup({
+                        -- enable takeover mode
                         filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json' },
+
+                        -- disable Volar LSP formatting
+                        on_init = function(client)
+                            client.server_capabilities.documentFormattingProvider = false
+                            client.server_capabilities.documentFormattingRangeProvider = false
+                        end,
                     })
                 end,
             },
