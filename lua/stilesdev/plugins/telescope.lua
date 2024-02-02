@@ -8,7 +8,8 @@ return {
         {'<leader>fs', function() require('telescope.builtin').grep_string({ search = vim.fn.input('Grep > ') }) end, desc = 'File Search'},
         {'<leader>fa', function() require('telescope.builtin').live_grep() end, desc = 'Live Grep'},
         {'<leader>fw', function() require('telescope.builtin').grep_string({ search = vim.fn.expand('<cword>') }) end, desc = 'File Search (Current Word)'},
-        {'<leader>fW', function() require('telescope.builtin').grep_string({ search = vim.fn.expand('<cWORD>') }) end, desc = 'File Search (Current WORD)'}
+        {'<leader>fW', function() require('telescope.builtin').grep_string({ search = vim.fn.expand('<cWORD>') }) end, desc = 'File Search (Current WORD)'},
+        {'<leader>fr', function() require('telescope.builtin').resume() end, desc = 'Reopen Last Search'},
     },
     opts = function()
         local actions = require('telescope.actions')
