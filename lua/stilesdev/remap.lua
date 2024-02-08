@@ -1,7 +1,7 @@
 vim.g.mapleader = ' '
 
 -- open Netrw
-vim.keymap.set('n', '<leader>fv', vim.cmd.Ex)
+--vim.keymap.set('n', '<leader>fv', vim.cmd.Ex)
 
 -- move highlighted lines up and down in visual mode with shift J and K
 -- indents highlighted lines properly when moving them inside of another block
