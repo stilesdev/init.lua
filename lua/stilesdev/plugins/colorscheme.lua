@@ -3,6 +3,22 @@ return {
     name = 'catppuccin',
     priority = 1000,
     config = function()
+        require('catppuccin').setup({
+            dim_inactive = {
+                enabled = true,
+                shade = 'light',
+                percentage = 0.10,
+            },
+            integrations = {
+                cmp = true,
+                gitsigns = true,
+                harpoon = true,
+                leap = true,
+                mason = true,
+                treesitter = true,
+            },
+        })
+
         -- termguicolors required for this color scheme
         vim.opt.termguicolors = true
 
