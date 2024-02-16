@@ -37,3 +37,5 @@ vim.opt.signcolumn = "yes"
 -- how long vim should wait for cursor to stop moving before firing CursorHold event
 vim.opt.updatetime = 500 -- default 4000, increase if performance suffers
 
+-- when a file has been detected to have been changed outside of vim and not changed inside vim, automatically read it again
+vim.opt.autoread = true
