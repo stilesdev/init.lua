@@ -1,5 +1,10 @@
 return {
     'theprimeagen/harpoon',
+    opts = {
+        menu = {
+            width = math.min(150, math.floor(vim.api.nvim_win_get_width(0) * 0.8)),
+        }
+    },
     keys = {
         { '<leader>a', function() require('harpoon.mark').add_file() end, desc = "Add current file to Harpoon jump list" },
         { '<C-e>', function() require('harpoon.ui').toggle_quick_menu() end, desc = "Toggle Harpoon jump list UI" },
