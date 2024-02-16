@@ -3,6 +3,7 @@ return {
     dependencies = {
         'catppuccin',
     },
+    event = {'BufReadPre', 'BufNewFile'},
     config = function ()
         local hooks = require('ibl.hooks')
         local colors = require('catppuccin.palettes').get_palette('mocha')
