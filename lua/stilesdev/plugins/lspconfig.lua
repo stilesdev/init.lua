@@ -37,7 +37,7 @@ return {
                 'tailwindcss',   -- Tailwind CSS
                 'taplo',         -- TOML
                 'tsserver',      -- JS/TS
-                'volar',         -- Vue
+                'volar@2.0.6',   -- Vue
             },
             handlers = {
                 lsp.default_setup,
@@ -79,10 +79,31 @@ return {
                         }
                     })
                 end,
+                tsserver = function()
+                    local vue_ls_path = require('mason-registry').get_package('vue-language-server'):get_install_path()
+
+                    require('lspconfig').tsserver.setup({
+                        init_options = {
+                            plugins = {
+                                {
+                                    name = '@vue/typescript-plugin',
+                                    -- location = vue_ls_path .. '/typescript-plugin', -- something shorter like this should work once vue-language-server v2.0.7+ is released
+                                    location = vue_ls_path .. '/node_modules/@vue/language-server/node_modules/@vue/typescript-plugin',
+                                    languages = { 'vue' },
+                                },
+                            },
+                        },
+                        filetypes = {
+                            'javascript',
+                            'typescript',
+                            'vue',
+                            'json',
+                        },
+                    })
+                end,
                 volar = function()
                     require('lspconfig').volar.setup({
-                        -- enable takeover mode
-                        filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json' },
+                        filetypes = { 'vue' },
 
                         -- disable Volar LSP formatting
                         on_init = function(client)
