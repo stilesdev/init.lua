@@ -31,6 +31,7 @@ return {
         require('mason-lspconfig').setup({
             ensure_installed = {
                 'eslint',        -- JS/TS Linting
+                'gopls',         -- Go
                 'jsonls',        -- JSON
                 'lua_ls',        -- LUA
                 'stylelint_lsp', -- CSS Linting
