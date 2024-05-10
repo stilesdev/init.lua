@@ -32,6 +32,7 @@ return {
             ensure_installed = {
                 'eslint',        -- JS/TS Linting
                 'gopls',         -- Go
+                'intelephense',  -- PHP
                 'jsonls',        -- JSON
                 'lemminx',       -- XML
                 'lua_ls',        -- LUA
@@ -71,6 +72,21 @@ return {
                         end,
                     })
                 end,
+                intelephense = function ()
+                    require('lspconfig').intelephense.setup({
+                        init_options = {
+                            globalStoragePath = vim.fn.expand('$HOME/.local/share/nvim/intelephense'),
+                            licenceKey = vim.fn.expand('$HOME/.local/share/nvim/intelephense.key'), -- key as string, or absolute path to text file containing the key
+                        },
+                        settings = {
+                            intelephense = {
+                                format = {
+                                    braces = 'k&r',
+                                },
+                            },
+                        },
+                    })
+                end,
                 stylelint_lsp = function ()
                     require('lspconfig').stylelint_lsp.setup({
                         -- only lint appropriate files
@@ -88,6 +104,16 @@ return {
                                 autoFixOnFormat = true,
                             }
                         }
+                    })
+                end,
+                tailwindcss = function ()
+                    require('lspconfig').tailwindcss.setup({
+                        filetypes = {
+                            'css',
+                            'less',
+                            'scss',
+                            'vue',
+                        },
                     })
                 end,
                 tsserver = function()
