@@ -33,6 +33,7 @@ return {
                 'eslint',        -- JS/TS Linting
                 'gopls',         -- Go
                 'jsonls',        -- JSON
+                'lemminx',       -- XML
                 'lua_ls',        -- LUA
                 'stylelint_lsp', -- CSS Linting
                 'tailwindcss',   -- Tailwind CSS
@@ -58,6 +59,15 @@ return {
 
                             -- allow eslint to respond to lsp formatting requests
                             client.server_capabilities.documentFormattingProvider = true
+                        end,
+                    })
+                end,
+                lemminx = function ()
+                    require('lspconfig').lemminx.setup({
+                        on_attach = function(client, bufnr)
+                            -- allow lemminx to respond to lsp formatting requests
+                            client.server_capabilities.documentFormattingProvider = true
+                            client.server_capabilities.documentFormattingRangeProvider = true
                         end,
                     })
                 end,
