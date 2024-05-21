@@ -40,7 +40,7 @@ return {
                 'tailwindcss',   -- Tailwind CSS
                 'taplo',         -- TOML
                 'tsserver',      -- JS/TS
-                'volar@2.0.6',   -- Vue
+                'volar',         -- Vue
             },
             handlers = {
                 lsp.default_setup,
@@ -124,8 +124,7 @@ return {
                             plugins = {
                                 {
                                     name = '@vue/typescript-plugin',
-                                    -- location = vue_ls_path .. '/typescript-plugin', -- something shorter like this should work once vue-language-server v2.0.7+ is released
-                                    location = vue_ls_path .. '/node_modules/@vue/language-server/node_modules/@vue/typescript-plugin',
+                                    location = vue_ls_path .. '/node_modules/@vue/language-server',
                                     languages = { 'vue' },
                                 },
                             },
@@ -140,8 +139,6 @@ return {
                 end,
                 volar = function()
                     require('lspconfig').volar.setup({
-                        filetypes = { 'vue' },
-
                         -- disable Volar LSP formatting
                         on_init = function(client)
                             client.server_capabilities.documentFormattingProvider = false
