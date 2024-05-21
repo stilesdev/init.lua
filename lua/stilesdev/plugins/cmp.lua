@@ -2,8 +2,16 @@ return {
     'hrsh7th/nvim-cmp',
     event = 'InsertEnter',
     dependencies = {
-        {'L3MON4D3/LuaSnip'},
+        {
+            'L3MON4D3/LuaSnip',
+            version = 'v2.*',
+            run = "make install_jsregexp",
+            config = function()
+                require('luasnip.loaders.from_snipmate').lazy_load()
+            end,
+        },
         {'hrsh7th/cmp-path'},
+        {'saadparwaiz1/cmp_luasnip'},
         {'hrsh7th/cmp-nvim-lsp'},
         {'hrsh7th/cmp-nvim-lua'},
     },
@@ -24,6 +32,7 @@ return {
             },
             sources = {
                 { name = 'path' },
+                { name = 'luasnip' },
                 { name = 'nvim_lsp' },
                 { name = 'nvim_lua' },
             },
@@ -38,6 +47,11 @@ return {
                 ['<C-u>'] = cmp.mapping.scroll_docs(-4),
                 ['<C-d>'] = cmp.mapping.scroll_docs(4),
             }),
+            snippet = {
+                expand = function(args)
+                    require('luasnip').lsp_expand(args.body)
+                end,
+            },
         })
     end,
 }
