@@ -39,3 +39,12 @@ vim.opt.updatetime = 500 -- default 4000, increase if performance suffers
 
 -- when a file has been detected to have been changed outside of vim and not changed inside vim, automatically read it again
 vim.opt.autoread = true
+
+-- highlight on yank
+vim.api.nvim_create_augroup('YankHighlight', { clear = true })
+vim.api.nvim_create_autocmd('TextYankPost', {
+    group = 'YankHighlight',
+    callback = function ()
+        vim.highlight.on_yank({ higroup = 'Visual', timeout = 500 })
+    end,
+})
