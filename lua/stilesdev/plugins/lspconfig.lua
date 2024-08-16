@@ -28,6 +28,9 @@ return {
             signs = false,
         })
 
+        -- hybridMode may cause highlighting issues in the template scope when tsserver attaches to vue files
+        local use_volar_hybrid_mode = false
+
         require('mason-lspconfig').setup({
             ensure_installed = {
                 'eslint',        -- JS/TS Linting
@@ -119,6 +122,12 @@ return {
                 tsserver = function()
                     local vue_ls_path = require('mason-registry').get_package('vue-language-server'):get_install_path()
 
+                    local filetypes = { 'javascript', 'typescript', 'javascriptreact', 'typescriptreact', 'json' }
+
+                    if use_volar_hybrid_mode then
+                        table.insert(filetypes, 'vue')
+                    end
+
                     require('lspconfig').tsserver.setup({
                         init_options = {
                             plugins = {
@@ -129,16 +138,23 @@ return {
                                 },
                             },
                         },
-                        filetypes = {
-                            'javascript',
-                            'typescript',
-                            'vue',
-                            'json',
-                        },
+                        filetypes = filetypes,
                     })
                 end,
                 volar = function()
                     require('lspconfig').volar.setup({
+                        -- restrict Volar to only Vue/Nuxt projects
+                        root_dir = require("lspconfig").util.root_pattern(
+                            "vue.config.js",
+                            "vue.config.ts",
+                            "nuxt.config.js",
+                            "nuxt.config.ts"
+                        ),
+                        init_options = {
+                            vue = {
+                                hybridMode = use_volar_hybrid_mode,
+                            },
+                        },
                         -- disable Volar LSP formatting
                         on_init = function(client)
                             client.server_capabilities.documentFormattingProvider = false
