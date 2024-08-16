@@ -68,6 +68,13 @@ return {
                 end,
                 lemminx = function ()
                     require('lspconfig').lemminx.setup({
+                        settings = {
+                            xml = {
+                                server = {
+                                    workDir = '~/.cache/lemminx',
+                                },
+                            },
+                        },
                         on_attach = function(client, bufnr)
                             -- allow lemminx to respond to lsp formatting requests
                             client.server_capabilities.documentFormattingProvider = true
