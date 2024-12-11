@@ -14,6 +14,12 @@ return {
         {'saadparwaiz1/cmp_luasnip'},
         {'hrsh7th/cmp-nvim-lsp'},
         {'hrsh7th/cmp-nvim-lua'},
+        {
+            -- properly configure luals for editing neovim configuration
+            'folke/lazydev.nvim',
+            ft = 'lua',
+            opts = {},
+        },
     },
     config = function()
         -- Configure autocompletion settings
@@ -31,6 +37,7 @@ return {
                 documentation = cmp.config.window.bordered(),
             },
             sources = {
+                { name = 'lazydev' },
                 { name = 'path' },
                 { name = 'luasnip' },
                 { name = 'nvim_lsp' },
