@@ -10,14 +10,6 @@ vim.opt.expandtab = true
 
 vim.opt.smartindent = true
 
--- always use tabs in golang to match style produced by gofmt
-vim.api.nvim_create_augroup('setIndent', { clear = true })
-vim.api.nvim_create_autocmd('Filetype', {
-    group = 'setIndent',
-    pattern = { 'go' },
-    command = 'setlocal noexpandtab'
-})
-
 -- disable line wrapping
 vim.opt.wrap = false
 
