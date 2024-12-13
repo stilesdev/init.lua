@@ -28,7 +28,7 @@ return {
             signs = false,
         })
 
-        -- hybridMode may cause highlighting issues in the template scope when tsserver attaches to vue files
+        -- hybridMode may cause highlighting issues in the template scope when ts_ls attaches to vue files
         local use_volar_hybrid_mode = false
 
         require('mason-lspconfig').setup({
@@ -42,7 +42,7 @@ return {
                 'stylelint_lsp', -- CSS Linting
                 'tailwindcss',   -- Tailwind CSS
                 'taplo',         -- TOML
-                'tsserver',      -- JS/TS
+                'ts_ls',         -- JS/TS
                 'volar',         -- Vue
             },
             handlers = {
@@ -126,7 +126,7 @@ return {
                         },
                     })
                 end,
-                tsserver = function()
+                ts_ls = function()
                     local vue_ls_path = require('mason-registry').get_package('vue-language-server'):get_install_path()
 
                     local filetypes = { 'javascript', 'typescript', 'javascriptreact', 'typescriptreact', 'json' }
@@ -135,7 +135,7 @@ return {
                         table.insert(filetypes, 'vue')
                     end
 
-                    require('lspconfig').tsserver.setup({
+                    require('lspconfig').ts_ls.setup({
                         init_options = {
                             plugins = {
                                 {

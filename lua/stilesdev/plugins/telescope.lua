@@ -1,7 +1,8 @@
 return {
     'nvim-telescope/telescope.nvim',
-    tag = '0.1.5',
+    branch = '0.1.x',
     dependencies = { 'nvim-lua/plenary.nvim' },
+    cmd = 'Telescope',
     keys = {
         {'<leader>fh', function() require('telescope.builtin').help_tags() end, desc = 'Find help'},
         {'<leader>ff', function() require('telescope.builtin').find_files({ find_command = { 'rg', '--files', '--iglob', '!.git', '--hidden' } }) end, desc = 'Find Files'},
