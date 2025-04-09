@@ -12,7 +12,10 @@ return {
         lsp.on_attach(function(client, bufnr)
             -- see :help lsp-zero-keybindings
             -- to learn the available actions
-            lsp.default_keymaps({buffer = bufnr})
+            lsp.default_keymaps({buffer = bufnr, exclude = { 'K' }})
+
+            -- nvim 0.11.0 disables borders on lsp hover windows, this re-enables them:
+            vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover({border = \'rounded\'})<cr>', {buffer = bufnr, desc = 'Hover documentation'})
         end)
 
         --lsp.set_sign_icons({
