@@ -11,6 +11,7 @@ return {
             opts = {},
         },
         {'hrsh7th/cmp-nvim-lsp'},
+        {'habamax/vim-godot'},
     },
     config = function()
         vim.api.nvim_create_autocmd('LspAttach', {
@@ -33,6 +34,9 @@ return {
             virtual_text = true,
             signs = false,
         })
+
+        -- gdscript lsp support comes in from habamax/vim-godot (not mason), and only mason-installed lsps get enabled automatically
+        vim.lsp.enable('gdscript')
 
         -- hybridMode may cause highlighting issues in the template scope when ts_ls attaches to vue files
         local use_volar_hybrid_mode = false
