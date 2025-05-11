@@ -34,6 +34,9 @@ return {
         -- hybridMode may cause highlighting issues in the template scope when ts_ls attaches to vue files
         local use_volar_hybrid_mode = false
 
+        -- load settings for work (stored in separate private repo)
+        local has_work_lsp_settings, work_lsp_settings = pcall(require, "work-lsp")
+
         require('mason-lspconfig').setup({
             ensure_installed = {
                 'eslint',        -- JS/TS Linting
@@ -91,6 +94,30 @@ return {
                             globalStoragePath = vim.fn.expand('$HOME/.local/share/nvim/intelephense'),
                             licenceKey = vim.fn.expand('$HOME/.local/share/nvim/intelephense.key'), -- key as string, or absolute path to text file containing the key
                         },
+                        on_init = function(client)
+                            if has_work_lsp_settings then
+                                local path = client.workspace_folders[1].name
+
+                                local project_match_found, project_env = work_lsp_settings.get_intelephense_env(path)
+
+                                if project_match_found then
+                                    client.config.settings.intelephense.environment = project_env
+                                    client.notify('workspace/didChangeConfiguration', { settings = client.config.settings })
+                                end
+                            end
+
+                            client.server_capabilities.completionProvider.triggerCharacters = {
+                                -- php
+                                -- '$', '>', ':', '\\', '/', '\'', '"',
+                                '$', ':', '\\', '/', '\'', '"',
+                                --phpdoc
+                                '*',
+                                -- html/js
+                                '.', '<'
+                            }
+
+                            return true
+                        end,
                         settings = {
                             intelephense = {
                                 format = {
