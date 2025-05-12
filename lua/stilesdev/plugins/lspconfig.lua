@@ -109,14 +109,7 @@ return {
             },
             on_init = function(client)
                 if has_work_lsp_settings then
-                    local path = client.workspace_folders[1].name
-
-                    local project_match_found, project_env = work_lsp_settings.get_intelephense_env(path)
-
-                    if project_match_found then
-                        client.config.settings.intelephense.environment = project_env
-                        client.notify('workspace/didChangeConfiguration', { settings = client.config.settings })
-                    end
+                    work_lsp_settings.intelephense_on_init(client)
                 end
 
                 client.server_capabilities.completionProvider.triggerCharacters = {
