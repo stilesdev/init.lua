@@ -11,6 +11,8 @@ return {
             },
             integrations = {
                 cmp = true,
+                dap = true,
+                dap_ui = true,
                 gitsigns = true,
                 harpoon = true,
                 leap = true,

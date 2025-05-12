@@ -24,6 +24,7 @@ return {
             'fugitive',
             'lazy',
             'mason',
+            'nvim-dap-ui',
             'oil',
         },
     },
