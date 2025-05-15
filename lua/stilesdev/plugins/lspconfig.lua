@@ -26,13 +26,24 @@ return {
                 vim.keymap.set('n', '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', {buffer = event.buf, desc = 'Format file'})
                 vim.keymap.set('x', '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', {buffer = event.buf, desc = 'Format selection'})
                 vim.keymap.set('n', '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>', {buffer = event.buf, desc = 'Execute code action'})
-            end,
-        })
 
-        vim.diagnostic.config({
-            underline = true,
-            virtual_text = true,
-            signs = false,
+                -- use LspAttach event instead of on_attach functions in vim.lsp.config below, since that would overwrite any on_attach function defined by lspconfig
+                local client = vim.lsp.get_client_by_id(event.data.client_id)
+                if not client then
+                    return
+                end
+
+                if client.name == 'eslint' then
+                    -- configure eslint to format on save
+                    vim.api.nvim_create_autocmd("BufWritePre", {
+                        buffer = event.buf,
+                        command = 'LspEslintFixAll', -- defined by lspconfig in eslint on_attach function
+                    })
+
+                    -- allow eslint to respond to lsp formatting requests
+                    client.server_capabilities.documentFormattingProvider = true
+                end
+            end,
         })
 
         -- gdscript lsp support comes in from habamax/vim-godot (not mason), and only mason-installed lsps get enabled automatically
@@ -74,19 +85,6 @@ return {
             },
         })
 
-        vim.lsp.config('eslint', {
-            on_attach = function(client, bufnr)
-                -- configure eslint to format on save
-                vim.api.nvim_create_autocmd("BufWritePre", {
-                    buffer = bufnr,
-                    command = 'EslintFixAll',
-                })
-
-                -- allow eslint to respond to lsp formatting requests
-                client.server_capabilities.documentFormattingProvider = true
-            end,
-        })
-
         vim.lsp.config('lemminx', {
             settings = {
                 xml = {
@@ -95,7 +93,7 @@ return {
                     },
                 },
             },
-            on_attach = function(client, bufnr)
+            on_init = function(client, bufnr)
                 -- allow lemminx to respond to lsp formatting requests
                 client.server_capabilities.documentFormattingProvider = true
                 client.server_capabilities.documentFormattingRangeProvider = true

@@ -48,3 +48,10 @@ vim.api.nvim_create_autocmd('TextYankPost', {
         vim.highlight.on_yank({ higroup = 'Visual', timeout = 500 })
     end,
 })
+
+-- diagnostics appearance
+vim.diagnostic.config({
+    underline = true,
+    virtual_text = true,
+    signs = false,
+})

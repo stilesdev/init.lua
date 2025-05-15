@@ -33,3 +33,8 @@ vim.keymap.set('n', '<leader>P', '"+P')
 
 -- make current file executable
 vim.keymap.set('n', '<leader>x', '<cmd>!chmod u+x %<CR>')
+
+-- diagnostics
+vim.keymap.set('n', 'gl', '<cmd>lua vim.diagnostic.open_float()<cr>')
+vim.keymap.set('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<cr>')
+vim.keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<cr>')
