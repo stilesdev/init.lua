@@ -175,7 +175,7 @@ return {
             filetypes = ts_ls_filetypes,
         })
 
-        vim.lsp.config('volar', {
+        vim.lsp.config('vue_ls', {
             -- restrict Volar to only Vue/Nuxt projects
             root_markers = {
                 'vue.config.js',
@@ -208,7 +208,7 @@ return {
                 'tailwindcss',   -- Tailwind CSS
                 'taplo',         -- TOML
                 'ts_ls',         -- JS/TS
-                'volar',         -- Vue
+                'vue_ls',        -- Vue
             },
         })
     end,
