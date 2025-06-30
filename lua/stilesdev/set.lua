@@ -25,6 +25,10 @@ vim.opt.undofile = true
 vim.opt.hlsearch = false
 vim.opt.incsearch = true
 
+-- make search case-sensitive, but only when search term contains an uppercase character
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+
 -- keep 8 lines visible at the top and bottom of the window while scrolling through files
 vim.opt.scrolloff = 8
 
