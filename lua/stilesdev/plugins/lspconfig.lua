@@ -188,6 +188,13 @@ return {
                     hybridMode = use_volar_hybrid_mode,
                 },
             },
+            settings = {
+                css = {
+                    lint = {
+                        unknownAtRules = 'ignore',
+                    },
+                },
+            },
             -- disable Volar LSP formatting
             on_init = function(client)
                 client.server_capabilities.documentFormattingProvider = false
