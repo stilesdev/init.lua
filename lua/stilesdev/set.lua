@@ -44,6 +44,17 @@ vim.opt.updatetime = 500 -- default 4000, increase if performance suffers
 -- when a file has been detected to have been changed outside of vim and not changed inside vim, automatically read it again
 vim.opt.autoread = true
 
+-- automatic clipboard tool detection doesn't work when in local tmux session -> ssh to remote machine -> run nvim on remote machine without remote tmux session
+-- osc52 still works in this situation even though it isn't automatically detected by neovim
+-- other situations work with automatic detection:
+-- - local terminal with or without tmux session (on wayland): detects wl-copy
+-- - local terminal without tmux -> ssh to remote machine without tmux: detects osc52
+-- - local terminal without tmux -> ssh to remote machine -> remote tmux session: detects tmux
+-- - local tmux session -> ssh to remote machine -> remote tmux session: detects tmux
+if vim.env.SSH_TTY ~= nil and vim.env.TMUX == nil then
+    vim.g.clipboard = 'osc52'
+end
+
 -- highlight on yank
 vim.api.nvim_create_augroup('YankHighlight', { clear = true })
 vim.api.nvim_create_autocmd('TextYankPost', {
