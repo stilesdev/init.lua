@@ -43,20 +43,41 @@ return {
                     -- allow eslint to respond to lsp formatting requests
                     client.server_capabilities.documentFormattingProvider = true
                 end
+
+                if client.name == 'vue_ls' then
+                    -- disable Volar LSP formatting
+                    client.server_capabilities.documentFormattingProvider = false
+                    client.server_capabilities.documentRangeFormattingProvider = false
+                end
             end,
         })
 
         -- gdscript lsp support comes in from habamax/vim-godot (not mason), and only mason-installed lsps get enabled automatically
         vim.lsp.enable('gdscript')
 
-        -- hybridMode may cause highlighting issues in the template scope when ts_ls attaches to vue files
-        local use_volar_hybrid_mode = false
-
         -- load settings for work (stored in separate private repo)
         local has_work_lsp_settings, work_lsp_settings = pcall(require, "work-lsp")
 
         vim.lsp.config('*', {
             capabilities = require('cmp_nvim_lsp').default_capabilities(),
+        })
+
+        require('mason').setup()
+        require('mason-lspconfig').setup({
+            automatic_enable = true,
+            ensure_installed = {
+                'eslint',        -- JS/TS Linting
+                'gopls',         -- Go
+                'intelephense',  -- PHP
+                'jsonls',        -- JSON
+                'lemminx',       -- XML
+                'lua_ls',        -- LUA
+                'stylelint_lsp', -- CSS Linting
+                'tailwindcss',   -- Tailwind CSS
+                'taplo',         -- TOML
+                'ts_ls',         -- JS/TS
+                'vue_ls',        -- Vue
+            },
         })
 
         vim.lsp.config('lua_ls', {
@@ -158,10 +179,6 @@ return {
             },
         })
 
-        local ts_ls_filetypes = { 'javascript', 'typescript', 'javascriptreact', 'typescriptreact', 'json' }
-        if use_volar_hybrid_mode then
-            table.insert(ts_ls_filetypes, 'vue')
-        end
         vim.lsp.config('ts_ls', {
             init_options = {
                 plugins = {
@@ -169,10 +186,11 @@ return {
                         name = '@vue/typescript-plugin',
                         location = vim.fn.expand("$MASON/packages/vue-language-server/node_modules/@vue/language-server"),
                         languages = { 'vue' },
+                        configNamespace = 'typescript',
                     },
                 },
             },
-            filetypes = ts_ls_filetypes,
+            filetypes = { 'javascript', 'typescript', 'javascriptreact', 'typescriptreact', 'json', 'vue' },
         })
 
         vim.lsp.config('vue_ls', {
@@ -183,39 +201,12 @@ return {
                 'nuxt.config.js',
                 'nuxt.config.ts',
             },
-            init_options = {
-                vue = {
-                    hybridMode = use_volar_hybrid_mode,
-                },
-            },
             settings = {
                 css = {
                     lint = {
                         unknownAtRules = 'ignore',
                     },
                 },
-            },
-            -- disable Volar LSP formatting
-            on_init = function(client)
-                client.server_capabilities.documentFormattingProvider = false
-                client.server_capabilities.documentFormattingRangeProvider = false
-            end,
-        })
-
-        require('mason').setup()
-        require('mason-lspconfig').setup({
-            ensure_installed = {
-                'eslint',        -- JS/TS Linting
-                'gopls',         -- Go
-                'intelephense',  -- PHP
-                'jsonls',        -- JSON
-                'lemminx',       -- XML
-                'lua_ls',        -- LUA
-                'stylelint_lsp', -- CSS Linting
-                'tailwindcss',   -- Tailwind CSS
-                'taplo',         -- TOML
-                'ts_ls',         -- JS/TS
-                'vue_ls',        -- Vue
             },
         })
     end,
