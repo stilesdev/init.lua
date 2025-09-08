@@ -19,6 +19,14 @@ return {
                 mason = true,
                 treesitter = true,
             },
+            custom_highlights = function (colors)
+                return {
+                    -- some colors changed as a result of vue_ls adding semantic highlighting support - change them back here
+                    ['@function.builtin'] = { link = 'Function' },
+                    ['@variable.builtin'] = { link = '@type.builtin' },
+                    ['@lsp.type.component.vue'] = { fg = colors.pink },
+                }
+            end,
         })
 
         -- termguicolors required for this color scheme
