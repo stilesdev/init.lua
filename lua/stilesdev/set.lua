@@ -69,4 +69,9 @@ vim.diagnostic.config({
     underline = true,
     virtual_text = true,
     signs = false,
+    float = {
+        header = '',
+        border = 'rounded',
+        source = true,
+    },
 })
