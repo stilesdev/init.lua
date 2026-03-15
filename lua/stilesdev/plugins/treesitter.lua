@@ -1,5 +1,6 @@
 return {
     "nvim-treesitter/nvim-treesitter",
+    branch = 'master', -- new main branch is 'main' but only compatible with nvim 0.12+ currently. 'master' is locked and kept for compatibility with nvim 0.11 and below
     build = function()
         require("nvim-treesitter.install").update({ with_sync = true })()
     end,
