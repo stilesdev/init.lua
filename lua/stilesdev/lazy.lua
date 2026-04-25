@@ -38,4 +38,7 @@ require("lazy").setup({
             paths = rtp_paths, -- add any custom paths here that you want to include in the runtimepath
         },
     },
+    ui = {
+        border = "rounded",
+    },
 })

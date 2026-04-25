@@ -38,6 +38,9 @@ vim.opt.signcolumn = "yes"
 -- TODO: figure out what this does and whether I want it
 --vim.opt.isfname:append("@-@")
 
+-- set default borders for all floating windows
+vim.o.winborder = "rounded"
+
 -- how long vim should wait for cursor to stop moving before firing CursorHold event
 vim.opt.updatetime = 500 -- default 4000, increase if performance suffers
 
@@ -71,7 +74,6 @@ vim.diagnostic.config({
     signs = false,
     float = {
         header = '',
-        border = 'rounded',
         source = true,
     },
 })
