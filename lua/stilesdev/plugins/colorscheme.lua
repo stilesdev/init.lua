@@ -1,5 +1,6 @@
 return {
     'catppuccin/nvim',
+    tag = 'v2.0.0', -- check whether colors have been changed again before updating
     name = 'catppuccin',
     priority = 1000,
     config = function()
