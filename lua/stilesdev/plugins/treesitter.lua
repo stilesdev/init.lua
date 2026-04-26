@@ -4,43 +4,41 @@ return {
     lazy = false,
     build = ':TSUpdate',
     config = function()
-        require('nvim-treesitter.configs').setup({
-            -- A list of parser names, or "all"
-            ensure_installed = { "javascript", "typescript", "c", "lua", "vim", "vimdoc", "query" },
+        local ts = require('nvim-treesitter')
+        ts.setup()
 
-            -- Install parsers synchronously (only applied to `ensure_installed`)
-            sync_install = false,
+        vim.api.nvim_create_autocmd('FileType', {
+            pattern = { '*' },
+            callback = function(event)
+                local filetype = event.match
+                local lang = vim.treesitter.language.get_lang(filetype)
+                if lang == nil then return end
 
-            -- Automatically install missing parsers when entering buffer
-            -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
-            auto_install = true,
+                local is_installed, _ = vim.treesitter.language.add(lang)
 
-            highlight = {
-                enable = true,
+                -- auto_install parsers if available
+                if not is_installed then
+                    local available_langs = ts.get_available()
+                    local is_available = vim.tbl_contains(available_langs, lang)
 
-                -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-                -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-                -- Using this option may slow down your editor, and you may see some duplicate highlights.
-                -- Instead of true it can also be a list of languages
-                additional_vim_regex_highlighting = false,
-                disable = function (lang, bufnr)
-                    return lang == 'xml' and vim.api.nvim_buf_line_count(bufnr) > 50000
-                end,
-            },
+                    if is_available then
+                        vim.notify('Installing treesitter parser for ' .. lang, vim.log.levels.INFO)
+                        ts.install({ lang }):wait(30 * 1000)
+                    end
+                end
 
-            indent = {
-                enable = {'php'},
-            },
+                -- for performance, do not enable treesitter for xml files with large line count
+                if lang == 'xml' and vim.api.nvim_buf_line_count(event.buf) > 50000 then return end
 
-            incremental_selection = {
-                enable = true,
-                keymaps = {
-                    init_selection = false,
-                    node_incremental = "v",
-                    scope_incremental = false,
-                    node_decremental = "V",
-                },
-            },
+                -- enable treesitter highlights
+                local ok, _ = pcall(vim.treesitter.start, event.buf, lang)
+                if not ok then return end
+
+                -- only enable treesitter indents for specific languages
+                if vim.tbl_contains({'php'}, lang) then
+                    vim.bo[event.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+                end
+            end
         })
     end,
 }

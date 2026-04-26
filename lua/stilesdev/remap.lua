@@ -35,6 +35,10 @@ vim.keymap.set('n', '<leader>p', '"+p')
 vim.keymap.set('v', '<leader>p', '"+p')
 vim.keymap.set('n', '<leader>P', '"+P')
 
+-- treesitter incremental_selection moved to nvim core
+vim.keymap.set('v', 'v', 'an', { remap = true })
+vim.keymap.set('v', 'V', 'in', { remap = true })
+
 -- make current file executable
 vim.keymap.set('n', '<leader>x', '<cmd>!chmod u+x %<CR>')
 
