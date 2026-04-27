@@ -7,6 +7,48 @@ return {
         local ts = require('nvim-treesitter')
         ts.setup()
 
+        -- always install base set of parsers
+        ts.install({
+            -- general
+            "bash",
+            "diff",
+            "git_config",
+            "git_rebase",
+            "gitattributes",
+            "gitcommit",
+            "gitignore",
+            "json",
+            "lua",
+            "markdown",
+            "toml",
+            "xml",
+            "yaml",
+
+            -- config languages
+            "caddy",
+            "dockerfile",
+            "hyprlang",
+            "nginx",
+            "ssh_config",
+
+            -- go
+            "go",
+            "gomod",
+            "gosum",
+            "gotmpl",
+
+            -- php
+            "php",
+            "sql",
+
+            -- web
+            "html",
+            "css",
+            "javascript",
+            "typescript",
+            "vue",
+        })
+
         vim.api.nvim_create_autocmd('FileType', {
             pattern = { '*' },
             callback = function(event)
