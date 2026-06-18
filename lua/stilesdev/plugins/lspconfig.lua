@@ -179,18 +179,30 @@ return {
             },
         })
 
+        local vue_ts_plugin = {
+            name = '@vue/typescript-plugin',
+            location = vim.fn.expand("$MASON/packages/vue-language-server/node_modules/@vue/language-server"),
+            languages = { 'vue' },
+            configNamespace = 'typescript',
+        }
+        local ts_lsp_filetypes = { 'javascript', 'typescript', 'javascriptreact', 'typescriptreact', 'json', 'vue' }
+
         vim.lsp.config('ts_ls', {
             init_options = {
-                plugins = {
-                    {
-                        name = '@vue/typescript-plugin',
-                        location = vim.fn.expand("$MASON/packages/vue-language-server/node_modules/@vue/language-server"),
-                        languages = { 'vue' },
-                        configNamespace = 'typescript',
+                plugins = { vue_ts_plugin },
+            },
+            filetypes = ts_lsp_filetypes,
+        })
+
+        vim.lsp.config('vtsls', {
+            settings = {
+                vtsls = {
+                    tsserver = {
+                        globalPlugins = { vue_ts_plugin },
                     },
                 },
             },
-            filetypes = { 'javascript', 'typescript', 'javascriptreact', 'typescriptreact', 'json', 'vue' },
+            filetypes = ts_lsp_filetypes,
         })
 
         vim.lsp.config('vue_ls', {
